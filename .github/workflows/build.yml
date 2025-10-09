@@ -94,6 +94,7 @@ jobs:
           path: affinity-${{ matrix.app }}-${{ needs.check.outputs.version }}.AppImage
           retention-days: 1
           if-no-files-found: error
+          compression-level: 0
   publish-appimage:
     runs-on: ubuntu-latest
     needs: [check, build-appimage]
