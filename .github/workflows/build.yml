@@ -90,7 +90,7 @@ jobs:
       - name: Upload appimage
         uses: actions/upload-artifact@v4
         with:
-          name: affinity-${{ matrix.app }}-${{ needs.check.outputs.version }}.AppImage
+          name: ${{ matrix.app }}-${{ needs.check.outputs.version }}
           path: affinity-${{ matrix.app }}-${{ needs.check.outputs.version }}.AppImage
           retention-days: 1
           if-no-files-found: error
@@ -106,14 +106,14 @@ jobs:
         name: Download
         with:
           path: artifact
-          pattern: "affinity-{photo,publisher,designer}-${{ needs.check.outputs.version }}.AppImage"
+          pattern: "{photo,publisher,designer}-${{ needs.check.outputs.version }}"
       - name: List Artifacts to Release
         run: tree
       - run: |
           gh release create \
             "rev-$REVISION" \
             --notes "automatic release of https://github.com/mrshmllow/affinity-nix/commit/$REVISION" \
-            artifact/*.AppImage
+            artifact/*/*.AppImage
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REVISION: ${{ needs.check.outputs.revision }}
