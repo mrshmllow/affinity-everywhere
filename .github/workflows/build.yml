@@ -127,7 +127,7 @@ jobs:
             else
                 cat output.log
                 echo "creating release rev-$REVISION-$i succeeded"
-                exit 1
+                exit 0
             fi
           done
           
