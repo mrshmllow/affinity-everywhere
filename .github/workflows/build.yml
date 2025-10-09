@@ -102,10 +102,6 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v5
-        with:
-          repository: 'mrshmllow/affinity-nix'
-          path: 'affinity-nix'
-          ref: ${{ needs.check.outputs.revision }}
       - uses: actions/download-artifact@v5
         name: Download
         with:
