@@ -115,11 +115,13 @@ jobs:
               "rev-$REVISION-$i" \
               --notes "automatic release of https://github.com/mrshmllow/affinity-nix/commit/$REVISION" \
               artifact/*/*.AppImage 2>&1 | \
-              tee /dev/tty | \
+              tee output.log | \
               grep -q "a release with the same tag name already exists"; then
+                cat output.log
                 echo "revision $i exists, skipping to next."
             else
                 echo "failed to create gh release."
+                cat output.log
                 exit 1
             fi
           done
