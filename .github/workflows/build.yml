@@ -110,7 +110,7 @@ jobs:
         name: Download
         with:
           path: artifact
-          pattern: "affinity-{photo,publisher,designer}-${{ needs.check.outputs.version }}"
+          pattern: "affinity-{photo,publisher,designer}-${{ needs.check.outputs.version }}.AppImage"
       - name: List Artifacts to Release
         run: |
           ls -la artifact
