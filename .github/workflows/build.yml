@@ -72,7 +72,7 @@ jobs:
       - name: Upload appimage
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.app }}-${{ github.sha }}
+          name: ${{ matrix.app }}-${{ needs.check.outputs.revision }}
           path: affinity-${{ matrix.app }}-2.AppImage
           retention-days: 1
   publish-appimage:
@@ -84,4 +84,14 @@ jobs:
         name: Download
         with:
           path: artifact
-          pattern: "{photo,publisher,designer}-${{ github.sha }}"
+          pattern: "{photo,publisher,designer}-${{ needs.check.outputs.revision }}"
+      - run: |
+          ls -la .
+      # - run: |
+      #     gh release create \
+      #       "rev-$REVISION" \
+      #       --notes "automatic release" \
+      #   env:
+      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     REVISION: ${{ needs.check.outputs.revision }}
+      #
