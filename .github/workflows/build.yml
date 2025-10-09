@@ -1,0 +1,78 @@
+name: Build AppImage
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: 0 2 * * *
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      should_run: ${{ steps.check.outputs.should_run }}
+      revision: ${{ steps.check.outputs.revision }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          repository: 'mrshmllow/affinity-nix'
+          path: 'affinity-nix'
+      - uses: actions/checkout@v5
+        with:
+          path: 'affinity-everywhere'
+      - name: Check
+        id: check
+        run: |
+          REVISION=$(cd ./affinity-nix && git rev-parse HEAD)
+          echo "revision=$REVISION" >> $GITHUB_OUTPUT
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; else
+            echo "should_run=true" >> $GITHUB_OUTPUT
+            exit
+          fi
+
+          if [ ! "$REVISION" = $(cat ./affinity-everywhere/last-revision) ]; then
+            echo "should_run=true" >> $GITHUB_OUTPUT
+          else
+            echo "should_run=false" >> $GITHUB_OUTPUT
+          fi
+  build-appimage:
+    strategy:
+      matrix:
+        arch: [x86_64-linux]
+        app: [photo, designer, publisher]
+    runs-on: ubuntu-latest
+    needs: [check]
+    if: ${{ needs.check.outputs.should_run == 'true' }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          repository: 'mrshmllow/affinity-nix'
+          path: 'affinity-nix'
+          ref: ${{ needs.check.outputs.revision }}
+      - uses: cachix/install-nix-action@v31
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+          extra_nix_config: |
+            trusted-public-keys = cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+            substituters = https://cache.garnix.io https://cache.nixos.org/
+      - name: build-${{ matrix.arch }}-${{ matrix.app }}
+        run: nix build -v -L ./affinity-nix#packages.${{ matrix.arch }}.${{ matrix.app }}
+      - name: bundle-${{ matrix.arch }}-${{ matrix.app }}
+        run: |
+          nix bundle -v -L \
+            --bundler github:ralismark/nix-appimage \
+            ./affinity-nix#packages.${{ matrix.arch }}.${{ matrix.app }}
+      - name: Upload appimage
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.app }}-${{ github.sha }}
+          path: affinity-${{ matrix.app }}-2.AppImage
+          retention-days: 1
+  publish-appimage:
+    runs-on: ubuntu-latest
+    needs: [check, build-appimage]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/download-artifact@v5
+        name: Download
+        with:
+          path: artifact
+          pattern: "{photo,publisher,designer}-${{ github.sha }}"
