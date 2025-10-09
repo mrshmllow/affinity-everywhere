@@ -51,7 +51,7 @@ jobs:
           path: 'affinity-nix'
           ref: ${{ needs.check.outputs.revision }}
       - name: Cache AppImage
-        id: cache-appiamge
+        id: cache-appimage
         uses: actions/cache@v4
         with:
           path: affinity-${{ matrix.app }}-2.AppImage
