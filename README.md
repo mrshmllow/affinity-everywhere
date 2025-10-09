@@ -3,7 +3,7 @@
 This is a sister project to https://github.com/mrshmllow/affinity-nix,
 which allows you to run the Affinity suite of applications on any Linux distro through AppImages.
 
-You can download the latest AppImage [here](https://github.com/mrshmllow/affinity-everywhere/releases/latest).
+**You can download the latest AppImage [here](https://github.com/mrshmllow/affinity-everywhere/releases/latest).**
 
 ## Usage
 
