@@ -109,6 +109,9 @@ jobs:
           pattern: "{photo,publisher,designer}"
       - name: List Artifacts to Release
         run: tree
+      - name: Ensure `artifact` exists
+        run: |
+          [ -d "artifact/" ] && echo "Artifact directory exists." || exit 1
       - run: |
           gh release create \
             "rev-$REVISION" \
