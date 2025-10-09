@@ -51,11 +51,6 @@ jobs:
     needs: [check]
     if: ${{ needs.check.outputs.should_run == 'true' }}
     steps:
-      - uses: actions/checkout@v5
-        with:
-          repository: 'mrshmllow/affinity-nix'
-          path: 'affinity-nix'
-          ref: ${{ needs.check.outputs.revision }}
       - name: Cache AppImage
         id: cache-appimage
         uses: actions/cache@v4
@@ -77,7 +72,7 @@ jobs:
         run: |
           nix bundle -v -L \
             --bundler github:ralismark/nix-appimage \
-            ./affinity-nix#packages.${{ matrix.arch }}.${{ matrix.app }}
+            github:mrshmllow/affinity-nix/${{ needs.check.outputs.revision }}#packages.${{ matrix.arch }}.${{ matrix.app }}
       - name: append affinity version to AppImage
         if: steps.cache-appimage.outputs.cache-hit != 'true'
         run: |
