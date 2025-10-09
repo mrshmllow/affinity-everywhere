@@ -38,7 +38,7 @@ Commands:
 For example, accessing `wine`:
 
 ```sh
-$ /affinity-photo-2.6.4.AppImage wine
+$ ./affinity-photo-2.6.4.AppImage wine
 Usage: wine PROGRAM [ARGUMENTS...]   Run the specified program
        wine --help                   Display this help and exit
        wine --version                Output version information and exit
@@ -48,5 +48,5 @@ Usage: wine PROGRAM [ARGUMENTS...]   Run the specified program
 Or `winecfg`:
 
 ```sh
-$ /affinity-photo-2.6.4.AppImage wine winecfg
+$ ./affinity-photo-2.6.4.AppImage wine winecfg
 ```
