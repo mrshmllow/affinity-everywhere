@@ -106,7 +106,7 @@ jobs:
           pattern: "{photo,publisher,designer}-${{ needs.check.outputs.revision }}"
       - name: List Artifacts to Release
         run: |
-          ls -la artifact/*.AppImage
+          ls -la artifacts/*.AppImage
       - run: |
           gh release create \
             "rev-$REVISION" \
