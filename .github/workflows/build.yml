@@ -129,7 +129,7 @@ jobs:
       - uses: actions/checkout@v5
       - name: Record Revision
         run: |
-          echo $REVISION > ./last-revision
+          echo "$REVISION" > ./last-revision
         env:
           REVISION: ${{ needs.check.outputs.revision }}
       - uses: stefanzweifel/git-auto-commit-action@v6
