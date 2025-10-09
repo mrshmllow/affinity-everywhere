@@ -78,6 +78,10 @@ jobs:
           nix bundle -v -L \
             --bundler github:ralismark/nix-appimage \
             ./affinity-nix#packages.${{ matrix.arch }}.${{ matrix.app }}
+      - name: append affinity version to AppImage
+        if: steps.cache-appimage.outputs.cache-hit != 'true'
+        run: |
+          mv affinity-${{ matrix.app }}-2.AppImage affinity-${{ matrix.app }}-${{ needs.check.outputs.version }}.AppImage
       - name: resolve symbolic link
         if: steps.cache-appimage.outputs.cache-hit != 'true'
         run: |
