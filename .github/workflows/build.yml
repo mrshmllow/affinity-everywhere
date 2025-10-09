@@ -111,17 +111,22 @@ jobs:
         run: chmod +x artifact/*/*.AppImage
       - run: |
           for i in {1..50}; do
-            if gh release create \
+            if ! gh release create \
               "rev-$REVISION-$i" \
               --notes "automatic release of https://github.com/mrshmllow/affinity-nix/commit/$REVISION" \
               artifact/*/*.AppImage 2>&1 | \
-              tee output.log | \
-              grep -q "a release with the same tag name already exists"; then
+              tee output.log; then
                 cat output.log
-                echo "revision $i exists, skipping to next."
+                
+                if grep -q "a release with the same tag name already exists"; then
+                  echo "tag rev-$REVISION-$i exists, skipping to next."
+                else
+                  echo "failed to create gh release."
+                  exit 1
+                fi
             else
-                echo "failed to create gh release."
                 cat output.log
+                echo "creating release rev-$REVISION-$i succeeded"
                 exit 1
             fi
           done
