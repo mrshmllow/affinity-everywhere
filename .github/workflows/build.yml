@@ -72,12 +72,19 @@ jobs:
           nix bundle -v -L \
             --bundler github:ralismark/nix-appimage \
             ./affinity-nix#packages.${{ matrix.arch }}.${{ matrix.app }}
+      - name: resolve symbolic link
+        if: steps.cache-appimage.outputs.cache-hit != 'true'
+        run: |
+          real_path=$(readlink -f "./affinity-${{ matrix.app }}-2.AppImage")
+          rm "./affinity-${{ matrix.app }}-2.AppImage"
+          cp $real_path "./affinity-${{ matrix.app }}-2.AppImage"
       - name: Upload appimage
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.app }}-${{ needs.check.outputs.revision }}
           path: affinity-${{ matrix.app }}-2.AppImage
           retention-days: 1
+          if-no-files-found: error
   publish-appimage:
     runs-on: ubuntu-latest
     needs: [check, build-appimage]
