@@ -33,7 +33,7 @@ jobs:
             exit
           fi
 
-          if [ ! "$REVISION" = $(cat ./affinity-everywhere/last-revision) ]; then
+          if [ ! "$REVISION" = "$(cat ./affinity-everywhere/last-revision)" ]; then
             echo "should_run=true" >> $GITHUB_OUTPUT
           else
             echo "should_run=false" >> $GITHUB_OUTPUT
@@ -90,7 +90,7 @@ jobs:
       - name: Upload appimage
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.app }}-${{ needs.check.outputs.revision }}
+          name: affinity-${{ matrix.app }}-${{ needs.check.outputs.version }}.AppImage
           path: affinity-${{ matrix.app }}-${{ needs.check.outputs.version }}.AppImage
           retention-days: 1
           if-no-files-found: error
