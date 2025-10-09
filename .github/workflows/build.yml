@@ -90,7 +90,7 @@ jobs:
       - name: Upload appimage
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.app }}-${{ needs.check.outputs.version }}
+          name: ${{ matrix.app }}
           path: affinity-${{ matrix.app }}-${{ needs.check.outputs.version }}.AppImage
           retention-days: 1
           if-no-files-found: error
@@ -106,7 +106,7 @@ jobs:
         name: Download
         with:
           path: artifact
-          pattern: "{photo,publisher,designer}-${{ needs.check.outputs.version }}"
+          pattern: "{photo,publisher,designer}"
       - name: List Artifacts to Release
         run: tree
       - run: |
