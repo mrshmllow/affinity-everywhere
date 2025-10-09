@@ -56,6 +56,9 @@ jobs:
         with:
           path: affinity-${{ matrix.app }}-2.AppImage
           key: ${{ matrix.app }}-appimage-${{ needs.check.outputs.revision }}
+      - name: list cached items
+        run: |
+          ls -la .
       - uses: cachix/install-nix-action@v31
         if: steps.cache-appimage.outputs.cache-hit != 'true'
         with:
