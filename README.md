@@ -5,6 +5,10 @@ which allows you to run the Affinity suite of applications on any Linux distro t
 
 **You can download the latest AppImage [here](https://github.com/mrshmllow/affinity-everywhere/releases/latest).**
 
+## Preamble
+
+The prefix is located in `$XDG_DATA_HOME/affinity/` falling back to `$HOME/.local/share/affinity/`.
+
 ## Usage
 
 Double click them!
