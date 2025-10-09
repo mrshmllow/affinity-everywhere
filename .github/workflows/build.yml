@@ -76,8 +76,7 @@ jobs:
         if: steps.cache-appimage.outputs.cache-hit != 'true'
         run: |
           real_path=$(readlink -f "./affinity-${{ matrix.app }}-2.AppImage")
-          rm "./affinity-${{ matrix.app }}-2.AppImage"
-          cp $real_path "./affinity-${{ matrix.app }}-2.AppImage"
+          cp --remove-destination $real_path "./affinity-${{ matrix.app }}-2.AppImage"
       - name: Upload appimage
         uses: actions/upload-artifact@v4
         with:
