@@ -112,6 +112,8 @@ jobs:
       - name: Ensure `artifact` exists
         run: |
           [ -d "artifact/" ] && echo "Artifact directory exists." || exit 1
+      - name: Chmod AppImages
+        run: chmod +x artifact/*/*.AppImage
       - run: |
           gh release create \
             "rev-$REVISION" \
