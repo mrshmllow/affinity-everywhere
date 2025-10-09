@@ -12,6 +12,7 @@ jobs:
     outputs:
       should_run: ${{ steps.check.outputs.should_run }}
       revision: ${{ steps.check.outputs.revision }}
+      version: ${{ steps.version.outputs.version }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -20,6 +21,7 @@ jobs:
       - uses: actions/checkout@v5
         with:
           path: 'affinity-everywhere'
+      - uses: cachix/install-nix-action@v31
       - name: Check
         id: check
         run: |
@@ -36,6 +38,10 @@ jobs:
           else
             echo "should_run=false" >> $GITHUB_OUTPUT
           fi
+      - name: Find Version
+        id: version
+        run: |
+          echo "version=$(nix eval ./affinity-nix#version --json | jq -r)" >> $GITHUB_OUTPUT
   build-appimage:
     strategy:
       matrix:
@@ -54,7 +60,7 @@ jobs:
         id: cache-appimage
         uses: actions/cache@v4
         with:
-          path: affinity-${{ matrix.app }}-2.AppImage
+          path: affinity-${{ matrix.app }}-${{ needs.check.outputs.version }}.AppImage
           key: ${{ matrix.app }}-appimage-${{ needs.check.outputs.revision }}
       - name: list cached items
         run: |
@@ -75,13 +81,13 @@ jobs:
       - name: resolve symbolic link
         if: steps.cache-appimage.outputs.cache-hit != 'true'
         run: |
-          real_path=$(readlink -f "./affinity-${{ matrix.app }}-2.AppImage")
-          cp --remove-destination $real_path "./affinity-${{ matrix.app }}-2.AppImage"
+          real_path=$(readlink -f "./affinity-${{ matrix.app }}-${{ needs.check.outputs.version }}.AppImage")
+          cp --remove-destination $real_path "./affinity-${{ matrix.app }}-${{ needs.check.outputs.version }}.AppImage"
       - name: Upload appimage
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.app }}-${{ needs.check.outputs.revision }}
-          path: affinity-${{ matrix.app }}-2.AppImage
+          path: affinity-${{ matrix.app }}-${{ needs.check.outputs.version }}.AppImage
           retention-days: 1
           if-no-files-found: error
   publish-appimage:
@@ -89,6 +95,10 @@ jobs:
     needs: [check, build-appimage]
     steps:
       - uses: actions/checkout@v5
+        with:
+          repository: 'mrshmllow/affinity-nix'
+          path: 'affinity-nix'
+          ref: ${{ needs.check.outputs.revision }}
       - uses: actions/download-artifact@v5
         name: Download
         with:
