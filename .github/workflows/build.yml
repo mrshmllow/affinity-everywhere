@@ -94,13 +94,15 @@ jobs:
         with:
           path: artifact
           pattern: "{photo,publisher,designer}-${{ needs.check.outputs.revision }}"
+      - name: List Artifacts to Release
+        run: |
+          ls -la artifact/*.AppImage
       - run: |
-          ls -la artifact/*
-      # - run: |
-      #     gh release create \
-      #       "rev-$REVISION" \
-      #       --notes "automatic release" \
-      #   env:
-      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     REVISION: ${{ needs.check.outputs.revision }}
-      #
+          gh release create \
+            "rev-$REVISION" \
+            --notes "automatic release of https://github.com/mrshmllow/affinity-nix/commit/$REVISION" \
+            artifact/*.AppImage
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REVISION: ${{ needs.check.outputs.revision }}
+
