@@ -23,7 +23,7 @@ jobs:
           REVISION=$(cd ./affinity-nix && git rev-parse HEAD)
           echo "revision=$REVISION" >> $GITHUB_OUTPUT
 
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; else
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "should_run=true" >> $GITHUB_OUTPUT
             exit
           fi
