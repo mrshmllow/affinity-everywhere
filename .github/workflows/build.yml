@@ -46,7 +46,7 @@ jobs:
     strategy:
       matrix:
         arch: [x86_64-linux]
-        app: [photo, designer, publisher]
+        app: [photo, designer, publisher, v3]
     runs-on: ubuntu-latest
     needs: [check]
     if: ${{ needs.check.outputs.should_run == 'true' }}
