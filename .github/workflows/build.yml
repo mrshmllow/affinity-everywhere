@@ -135,7 +135,7 @@ jobs:
           compression-level: 0
   publish-appimage:
     runs-on: ubuntu-latest
-    needs: [check, build-appimage]
+    needs: [check, build-v3-appimage, build-v2-appimage]
     permissions:
       contents: write
     steps:
