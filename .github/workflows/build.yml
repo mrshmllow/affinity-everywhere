@@ -128,7 +128,7 @@ jobs:
       - name: Upload appimage
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.app }}
+          name: v3
           path: affinity-v3.AppImage
           retention-days: 1
           if-no-files-found: error
