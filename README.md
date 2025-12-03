@@ -7,7 +7,7 @@ which allows you to run the Affinity suite of applications on any Linux distro t
 
 ## Preamble
 
-The prefix is located in `$XDG_DATA_HOME/affinity/` falling back to `$HOME/.local/share/affinity/`.
+The prefix is located in `$XDG_DATA_HOME/affinity/` or `$XDG_DATA_HOME/affinity-v3/` falling back to `$HOME/.local/share/affinity/` or `$HOME/.local/share/affinity-v3/`.
 
 ## Usage
 
