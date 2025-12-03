@@ -15,11 +15,11 @@ Double click them!
 
 ### CLI Usage
 
-Additionally, each AppImage (`photo|designer|publisher`) has the following extra functionality:
+Additionally, each AppImage (`v3|photo|designer|publisher`) has the following extra functionality:
 
 ```sh
-$ ./affinity-photo-2.6.4.AppImage --help
-Usage: affinity-photo-2 [COMMAND] [OPTIONS]
+$ affinity-v3 --help
+Usage: affinity-v3 [COMMAND] [OPTIONS]
 
 Commands:
   wine
@@ -28,17 +28,17 @@ Commands:
   wineserver
   update|repair|install   Update or repair the application
   help                    Show this
-  (nothing)               Launch Affinity Photo 2
+  (nothing)               Launch Affinity v3
 
 ```
 
 > [!TIP]
-> Armed with these you should be able to follow https://affinity.liz.pet/docs/misc-troubleshooting.html for troubleshooting steps.
+> Armed with these you should be able to follow https://affinity.liz.pet/v2/misc-troubleshooting/ for troubleshooting steps.
 
 For example, accessing `wine`:
 
 ```sh
-$ ./affinity-photo-2.6.4.AppImage wine
+$ affinity-v3 wine
 Usage: wine PROGRAM [ARGUMENTS...]   Run the specified program
        wine --help                   Display this help and exit
        wine --version                Output version information and exit
@@ -48,5 +48,6 @@ Usage: wine PROGRAM [ARGUMENTS...]   Run the specified program
 Or `winecfg`:
 
 ```sh
-$ ./affinity-photo-2.6.4.AppImage wine winecfg
+$ affinity-v3 wine winecfg
 ```
+
