@@ -18,7 +18,7 @@ Double click them!
 Additionally, each AppImage (`v3|photo|designer|publisher`) has the following extra functionality:
 
 ```sh
-$ affinity-v3 --help
+$ affinity-v3.AppImage --help
 Usage: affinity-v3 [COMMAND] [OPTIONS]
 
 Commands:
@@ -38,7 +38,7 @@ Commands:
 For example, accessing `wine`:
 
 ```sh
-$ affinity-v3 wine
+$ affinity-v3.AppImage wine
 Usage: wine PROGRAM [ARGUMENTS...]   Run the specified program
        wine --help                   Display this help and exit
        wine --version                Output version information and exit
