@@ -83,7 +83,7 @@ jobs:
           real_path=$(readlink -f "./affinity-${{ matrix.app }}-${{ needs.check.outputs.version }}.AppImage")
           cp --remove-destination $real_path "./affinity-${{ matrix.app }}-${{ needs.check.outputs.version }}.AppImage"
       - name: Upload appimage
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.app }}
           path: affinity-${{ matrix.app }}-${{ needs.check.outputs.version }}.AppImage
@@ -126,7 +126,7 @@ jobs:
           real_path=$(readlink -f "./affinity-v3.AppImage")
           cp --remove-destination $real_path "./affinity-v3.AppImage"
       - name: Upload appimage
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: v3
           path: affinity-v3.AppImage
