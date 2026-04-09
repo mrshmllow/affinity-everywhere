@@ -53,7 +53,7 @@ jobs:
     steps:
       - name: Cache AppImage
         id: cache-appimage
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: affinity-${{ matrix.app }}-${{ needs.check.outputs.version }}.AppImage
           key: ${{ matrix.app }}-appimage-${{ needs.check.outputs.revision }}
@@ -100,7 +100,7 @@ jobs:
     steps:
       - name: Cache AppImage
         id: cache-appimage
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: affinity-v3.AppImage
           key: v3-appimage-${{ needs.check.outputs.revision }}
