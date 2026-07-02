@@ -190,4 +190,4 @@ jobs:
           echo "$REVISION" > ./last-revision
         env:
           REVISION: ${{ needs.check.outputs.revision }}
-      - uses: stefanzweifel/git-auto-commit-action@v7
+      - uses: stefanzweifel/git-auto-commit-action@v7.1.0
